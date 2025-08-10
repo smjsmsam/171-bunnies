@@ -9,7 +9,7 @@ public class TextCreator : MonoBehaviour
     public static bool runTextPrint;
     public static bool isSkipped;
     public static int charCount;
-    [SerializeField] Coroutine rollText;
+    private Coroutine rollText;
     void Update()
     {
         charCount = GetComponent<TMPro.TMP_Text>().text.Length;
