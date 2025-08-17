@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TutorialEvents : MonoBehaviour
@@ -40,6 +41,10 @@ public class TutorialEvents : MonoBehaviour
         {
             yield return new WaitForSeconds(1);
         }
+        if (eventPos == displaySprites.Length)
+        {
+            SceneManager.LoadScene(0);
+        }
         display.GetComponent<Image>().overrideSprite = displaySprites[eventPos];
         yield return SetDialogue(dialogue[eventPos]);
     }
@@ -57,7 +62,7 @@ public class TutorialEvents : MonoBehaviour
 
     public void NextButton()
     {
-        if (eventPos < displaySprites.Length - 1)
+        if (eventPos < displaySprites.Length)
         {
             eventPos++;
             EventMaster();
