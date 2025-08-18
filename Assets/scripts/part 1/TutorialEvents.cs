@@ -71,7 +71,7 @@ public class TutorialEvents : MonoBehaviour
 
     public void PreviousButton()
     {
-        if (eventPos != 1)
+        if (eventPos >= 1)
         {
             eventPos--;
             EventMaster();

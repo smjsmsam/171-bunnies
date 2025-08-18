@@ -11,3 +11,7 @@ ___
 - click dialogue box to skip text animation
 - click right leaf to go next in tutorial
 - click left leaf to go back in tutorial
+
+*Part2:*
+- click boxed options to answer question
+- click hint for clues about question

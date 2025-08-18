@@ -17,6 +17,10 @@ public class TextCreator : MonoBehaviour
         {
             runTextPrint = false;
             viewText = GetComponent<TMPro.TMP_Text>();
+            if (viewText.text == transferText)
+            {
+                return;
+            }
             viewText.text = "";
             if (rollText != null)
             {
