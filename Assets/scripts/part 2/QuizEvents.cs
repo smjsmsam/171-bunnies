@@ -8,11 +8,18 @@ using UnityEngine.UI;
 public class QuizEvents : MonoBehaviour
 {
     public GameObject nextButton;
-    public GameObject previousButton;
     public GameObject display;
     public GameObject colorOptions;
     public GameObject classOptions;
     public GameObject hintButton;
+    public GameObject aButton;
+    public GameObject bButton;
+    public GameObject cButton;
+    public GameObject dButton;
+    public GameObject eButton;
+    public GameObject oButton;
+    public GameObject rButton;
+    public GameObject yButton;
     [SerializeField] int eventPos;
     [SerializeField] Sprite[] displaySprites;
     [SerializeField] Sprite[] hintSprites;
@@ -74,49 +81,79 @@ public class QuizEvents : MonoBehaviour
     {
         if (eventPos == 0)
         {
-            // yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1);
         }
         if (eventPos == displaySprites.Length)
         {
             SceneManager.LoadScene(0);
         }
-        if (eventPos % 2 != 0 && buttonPressed == "")
+        if (eventPos % 2 == 0 || eventPos == displaySprites.Length - 1)
         {
-            nextButton.SetActive(false);
-            previousButton.SetActive(false);
-            hintButton.SetActive(true);
             display.GetComponent<Image>().overrideSprite = displaySprites[eventPos];
             yield return SetDialogue(dialogue[eventPos]);
-            if (correctAnswer[eventPos][1] == "Color")
-            {
-                colorOptions.SetActive(true);
-            }
-            else
-            {
-                classOptions.SetActive(true);
-            }
-            EventMaster();
-        }
-        else if (eventPos % 2 != 0 && buttonPressed == correctAnswer[eventPos][0])
-        {
-            nextButton.SetActive(true);
-            previousButton.SetActive(true);
-            buttonPressed = "";
-            if (correctAnswer[eventPos][1] == "Color")
-            {
-                colorOptions.SetActive(false);
-            }
-            else
-            {
-                classOptions.SetActive(false);
-            }
-            eventPos++;
-            EventMaster();
         }
         else
         {
-            display.GetComponent<Image>().overrideSprite = displaySprites[eventPos];
-            yield return SetDialogue(dialogue[eventPos]);
+            if (buttonPressed == "")
+            {
+                nextButton.SetActive(false);
+                hintButton.SetActive(true);
+                display.GetComponent<Image>().overrideSprite = displaySprites[eventPos];
+                yield return SetDialogue(dialogue[eventPos]);
+                if (correctAnswer[eventPos][1] == "Color")
+                {
+                    colorOptions.SetActive(true);
+                }
+                else
+                {
+                    classOptions.SetActive(true);
+                }
+            }
+            else
+            {
+                bool correct = true;
+                String currentCorrect = correctAnswer[eventPos][0];
+                if (buttonPressed.Length == currentCorrect.Length)
+                {
+                    foreach (char c in buttonPressed)
+                    {
+                        if (!correctAnswer[eventPos][0].Contains(c))
+                        {
+                            correct = false;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    correct = false;
+                }
+                if (correct)
+                {
+                    nextButton.SetActive(true);
+                    hintButton.SetActive(false);
+                    buttonPressed = "";
+                    if (correctAnswer[eventPos][1] == "Color")
+                    {
+                        colorOptions.SetActive(false);
+                        oButton.GetComponent<Shadow>().enabled = false;
+                        rButton.GetComponent<Shadow>().enabled = false;
+                        yButton.GetComponent<Shadow>().enabled = false;
+                    }
+                    else
+                    {
+                        classOptions.SetActive(false);
+                        aButton.GetComponent<Shadow>().enabled = false;
+                        bButton.GetComponent<Shadow>().enabled = false;
+                        cButton.GetComponent<Shadow>().enabled = false;
+                        dButton.GetComponent<Shadow>().enabled = false;
+                        eButton.GetComponent<Shadow>().enabled = false;
+                    }
+                    eventPos++;
+                    HintButton();
+                    EventMaster();
+                }
+            }
         }
     }
 
@@ -140,85 +177,107 @@ public class QuizEvents : MonoBehaviour
         }
     }
 
-    public void PreviousButton()
-    {
-        if (eventPos >= 1)
-        {
-            eventPos--;
-            EventMaster();
-        }
-    }
-
     public void AButton()
     {
-        buttonPressed = "A";
+        if (buttonPressed.Contains("A"))
+        {
+            buttonPressed = buttonPressed.Replace("A", String.Empty);
+            aButton.GetComponent<Shadow>().enabled = false;
+        }
+        else
+        {
+            buttonPressed += "A";
+            aButton.GetComponent<Shadow>().enabled = true;
+        }
         EventMaster();
     }
 
     public void BButton()
     {
-        if (buttonPressed == "D")
+        if (buttonPressed.Contains("B"))
         {
-            buttonPressed = "BD";
+            buttonPressed = buttonPressed.Replace("B", String.Empty);
+            bButton.GetComponent<Shadow>().enabled = false;
         }
         else
         {
-            buttonPressed = "B";
+            buttonPressed += "B";
+            bButton.GetComponent<Shadow>().enabled = true;
         }
         EventMaster();
     }
 
     public void CButton()
     {
-        buttonPressed = "C";
+        if (buttonPressed.Contains("C"))
+        {
+            buttonPressed = buttonPressed.Replace("C", String.Empty);
+            cButton.GetComponent<Shadow>().enabled = false;
+        }
+        else
+        {
+            buttonPressed += "C";
+            cButton.GetComponent<Shadow>().enabled = true;
+        }
         EventMaster();
     }
 
     public void DButton()
     {
-        if (buttonPressed == "B")
+        if (buttonPressed.Contains("D"))
         {
-            buttonPressed = "BD";
+            buttonPressed = buttonPressed.Replace("D", String.Empty);
+            dButton.GetComponent<Shadow>().enabled = false;
         }
         else
         {
-            buttonPressed = "D";
+            buttonPressed += "D";
+            dButton.GetComponent<Shadow>().enabled = true;
         }
         EventMaster();
     }
 
     public void EButton()
     {
-        buttonPressed = "E";
+        if (buttonPressed.Contains("E"))
+        {
+            buttonPressed = buttonPressed.Replace("E", String.Empty);
+            eButton.GetComponent<Shadow>().enabled = false;
+        }
+        else
+        {
+            buttonPressed += "E";
+            eButton.GetComponent<Shadow>().enabled = true;
+        }
         EventMaster();
     }
 
     public void OButton()
     {
-        if (buttonPressed == "R")
+        if (buttonPressed.Contains("O"))
         {
-            buttonPressed = "OR";
+            buttonPressed = buttonPressed.Replace("O", String.Empty);
+            oButton.GetComponent<Shadow>().enabled = false;
         }
         else
         {
-            buttonPressed = "O";
+            buttonPressed += "O";
+            oButton.GetComponent<Shadow>().enabled = true;
         }
         EventMaster();
     }
 
     public void RButton()
     {
-        if (buttonPressed == "Y")
+        if (buttonPressed.Contains("R"))
         {
-            buttonPressed = "RY";
-        }
-        else if (buttonPressed == "O")
-        {
-            buttonPressed = "OR";
+            buttonPressed = buttonPressed.Replace("R", String.Empty);
+            rButton.GetComponent<Shadow>().enabled = false;
         }
         else
         {
-            buttonPressed = "R";
+            buttonPressed += "R";
+            rButton.GetComponent<Shadow>().enabled = true;
         }
         EventMaster();
     }
@@ -226,20 +285,32 @@ public class QuizEvents : MonoBehaviour
 
     public void YButton()
     {
-        if (buttonPressed == "R")
+        if (buttonPressed.Contains("Y"))
         {
-            buttonPressed = "RY";
+            buttonPressed = buttonPressed.Replace("Y", String.Empty);
+            yButton.GetComponent<Shadow>().enabled = false;
         }
         else
         {
-            buttonPressed = "Y";
+            buttonPressed += "Y";
+            yButton.GetComponent<Shadow>().enabled = true;
         }
         EventMaster();
     }
 
     public void HintButton()
     {
-        hintButton.GetComponent<Button>().image.sprite = hintSprites[Int32.Parse(correctAnswer[eventPos][2])];
+        Sprite newSprite;
+        if (eventPos % 2 != 0)
+        {
+            newSprite = hintSprites[Int32.Parse(correctAnswer[eventPos][2])];
+        }
+        else
+        {
+            newSprite = hintSprites[12];
+        }
+        hintButton.GetComponent<Image>().sprite = newSprite;
+        hintButton.GetComponent<RectTransform>().sizeDelta = new Vector2(newSprite.rect.width, newSprite.rect.height);
     }
 
     public void SkipTextAnimation()
