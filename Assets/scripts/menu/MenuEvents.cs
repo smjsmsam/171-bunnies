@@ -13,6 +13,6 @@ public class MenuEvents : MonoBehaviour
     }
     public void Part3Button()
     {
-        // SceneManager.LoadScene(3);
+        SceneManager.LoadScene(3);
     }
 }
