@@ -1,17 +1,19 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class NodeView : MonoBehaviour
+public class Node : MonoBehaviour
 {
     public GameObject nodeName;
     public GameObject bunny;
     public GameObject oCarrot;
     public GameObject rCarrot;
     public GameObject yCarrot;
+    public List<Node> neighbors = new List<Node>();
 
-    void updateName(string newName)
+    private void Awake()
     {
-        nodeName.GetComponent<TMP_Text>().text = newName;
+        neighbors = new List<Node>();
     }
 
 }
